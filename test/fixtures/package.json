@@ -1,0 +1,62 @@
+{
+  "name": "seed",
+  "version": "0.0.1",
+  "description": "NodeJS projects seed",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "cross-env NODE_ENV=test nyc --all ava",
+    "coverage:report": "nyc report --reporter=html",
+    "watch:test": "cross-env NODE_ENV=test ava --watch"
+  },
+  "keywords": [
+    "nodejs",
+    "seed"
+  ],
+  "author": "Anton Klimenko <antklim@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=7.6.0"
+  },
+  "devDependencies": {
+    "ava": "^0.23.0",
+    "cross-env": "^5.1.1",
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-import": "^2.8.0",
+    "nyc": "^11.2.1",
+    "testdouble": "^3.2.6"
+  },
+  "ava": {
+    "files": [
+      "test/**.test.js"
+    ],
+    "source": [
+      "lib/*.js"
+    ],
+    "failFast": true
+  },
+  "nyc": {
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 80,
+    "statements": 80,
+    "functions": 80,
+    "branches": 80,
+    "watermarks": {
+      "lines": [80, 95],
+      "functions": [80, 95],
+      "branches": [80, 95],
+      "statements": [80, 95]
+    },
+    "exclude": [
+      "test/**",
+      "coverage/**"
+    ],
+    "reporter": [
+      "lcovonly",
+      "text"
+    ]
+  }
+}
