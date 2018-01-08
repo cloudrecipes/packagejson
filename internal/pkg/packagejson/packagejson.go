@@ -11,17 +11,18 @@ var requiredFields = []string{"Name", "Version"}
 
 // PackageJSON represents NodeJS package.json
 type PackageJSON struct {
-	Name        string   `json:"name"`
-	Version     string   `json:"version"`
-	Description string   `json:"description"`
-	Keywords    []string `json:"keywords"`
-	Homepage    string   `json:"homepage"`
-	License     string   `json:"license"`
-	Files       []string `json:"files"`
-	Main        string   `json:"main"`
-	Os          []string `json:"os"`
-	Cpu         []string `json:"cpu"`
-	Private     bool     `json:"private"`
+	Name        string            `json:"name"`
+	Version     string            `json:"version"`
+	Description string            `json:"description"`
+	Keywords    []string          `json:"keywords"`
+	Homepage    string            `json:"homepage"`
+	License     string            `json:"license"`
+	Files       []string          `json:"files"`
+	Main        string            `json:"main"`
+	Scripts     map[string]string `json:"scripts"`
+	Os          []string          `json:"os"`
+	Cpu         []string          `json:"cpu"`
+	Private     bool              `json:"private"`
 }
 
 // Parse parses package.json payload and returns structure.
@@ -81,6 +82,10 @@ func (p *PackageJSON) Equals(other *PackageJSON) (diff []string, equals bool) {
 
 	if p.Main != other.Main {
 		diff = append(diff, fmt.Sprintf("Difference @Main: '%s' vs '%s'", p.Main, other.Main))
+	}
+
+	if !reflect.DeepEqual(p.Scripts, other.Scripts) {
+		diff = append(diff, fmt.Sprintf("Difference @Scripts: %v vs %v", p.Scripts, other.Scripts))
 	}
 
 	if len(p.Os) == 0 && len(other.Os) == 0 {

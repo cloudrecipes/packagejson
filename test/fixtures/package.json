@@ -4,10 +4,7 @@
   "description": "NodeJS projects seed",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint .",
-    "test": "cross-env NODE_ENV=test nyc --all ava",
-    "coverage:report": "nyc report --reporter=html",
-    "watch:test": "cross-env NODE_ENV=test ava --watch"
+    "test": "cross-env NODE_ENV=test nyc --all ava"
   },
   "keywords": [
     "nodejs",

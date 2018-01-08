@@ -29,9 +29,12 @@ var packageJson = &p.PackageJSON{
 	License:     "MIT",
 	Files:       []string{},
 	Main:        "index.js",
-	Os:          []string{},
-	Cpu:         []string{},
-	Private:     false,
+	Scripts: map[string]string{
+		"test": "cross-env NODE_ENV=test nyc --all ava",
+	},
+	Os:      []string{},
+	Cpu:     []string{},
+	Private: false,
 }
 
 var parseTestCases = []struct {
@@ -68,9 +71,12 @@ var equalsTestCases = []struct {
 			License:     "MIT2",
 			Files:       []string{"main.go"},
 			Main:        "index.js",
-			Os:          []string{"osx"},
-			Cpu:         []string{"darwin"},
-			Private:     true,
+			Scripts: map[string]string{
+				"test": "cross-env NODE_ENV=test nyc --all ava",
+			},
+			Os:      []string{"osx"},
+			Cpu:     []string{"darwin"},
+			Private: true,
 		},
 		diff: []string{
 			"Difference @Name: 'seed' vs 'Seed'",
@@ -97,12 +103,14 @@ var equalsTestCases = []struct {
 			License:     "MIT",
 			Files:       []string{},
 			Main:        "index.js",
+			Scripts:     map[string]string{},
 			Os:          []string{},
 			Cpu:         []string{},
 			Private:     false,
 		},
 		diff: []string{
 			"Difference @Keywords: [nodejs seed] vs [nodejs]",
+			"Difference @Scripts: map[test:cross-env NODE_ENV=test nyc --all ava] vs map[]",
 		},
 		equals: false,
 	},
@@ -116,6 +124,7 @@ var equalsTestCases = []struct {
 			License:     "MIT",
 			Files:       []string{"test.go"},
 			Main:        "index.js",
+			Scripts:     map[string]string{},
 			Os:          []string{"osx"},
 			Cpu:         []string{"darwin"},
 			Private:     false,
@@ -129,6 +138,7 @@ var equalsTestCases = []struct {
 			License:     "MIT",
 			Files:       []string{"main.go"},
 			Main:        "main.js",
+			Scripts:     map[string]string{},
 			Os:          []string{"win"},
 			Cpu:         []string{"solaris"},
 			Private:     false,
