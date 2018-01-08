@@ -15,20 +15,25 @@ var validationTestCases = []struct {
 	fixturepath string
 	err         error
 }{
-	{fixturepath: path.Join(fixturesdir, "package_no_name.json"), err: errors.New("'name' field is required in package.json")},
+	{fixturepath: path.Join(fixturesdir, "package_no_name.json"), err: errors.New("'Name' field is required in package.json")},
+	{fixturepath: path.Join(fixturesdir, "package_no_version.json"), err: errors.New("'Version' field is required in package.json")},
 	{fixturepath: path.Join(fixturesdir, "package.json"), err: nil},
 }
 
-// TODO: it's a placeholder for parser validation.
-// Expected field should be filled with the correct structure.
+// TODO: add happy path case.
 var parseTestCases = []struct {
 	fixturepath string
 	expected    *p.PackageJSON
 	err         error
 }{
 	{
-		fixturepath: path.Join(fixturesdir, "package.json"),
+		fixturepath: path.Join(fixturesdir, "broken_package.json"),
 		expected:    nil,
-		err:         nil,
+		err:         errors.New("unexpected end of JSON input"),
 	},
+	// {
+	// 	fixturepath: path.Join(fixturesdir, "package.json"),
+	// 	expected:    nil,
+	// 	err:         nil,
+	// },
 }

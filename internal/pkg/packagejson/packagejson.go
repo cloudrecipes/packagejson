@@ -3,13 +3,16 @@ package packagejson
 
 import (
 	"encoding/json"
-	"errors"
+	"fmt"
+	"reflect"
 )
+
+var requiredFields = []string{"Name", "Version"}
 
 // PackageJSON represents NodeJS package.json
 type PackageJSON struct {
-	Name        string   `json:"name"`    // required
-	Version     string   `json:"version"` // required
+	Name        string   `json:"name"`
+	Version     string   `json:"version"`
 	Description string   `json:"description"`
 	Keywords    []string `json:"keywords"`
 	Homepage    string   `json:"homepage"`
@@ -30,8 +33,19 @@ func Parse(payload []byte) (*PackageJSON, error) {
 
 // Validate checks if provided package.json is valid.
 func (p *PackageJSON) Validate() error {
-	if len(p.Name) == 0 {
-		return errors.New("'name' field is required in package.json")
+	for _, fieldname := range requiredFields {
+		value := getField(p, fieldname)
+		if len(value) == 0 {
+			return fmt.Errorf("'%s' field is required in package.json", fieldname)
+		}
 	}
+
 	return nil
+}
+
+// getField returns struct field value by name.
+func getField(i interface{}, fieldname string) string {
+	value := reflect.ValueOf(i)
+	field := reflect.Indirect(value).FieldByName(fieldname)
+	return field.String()
 }

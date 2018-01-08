@@ -2,6 +2,7 @@ package packagejson_test
 
 import (
 	"io/ioutil"
+	"reflect"
 	"testing"
 
 	p "github.com/cloudrecipes/package-json/internal/pkg/packagejson"
@@ -29,6 +30,31 @@ func TestValidate(t *testing.T) {
 
 		if test.err == nil && err != nil {
 			t.Fatalf("\n>>> Expected validation error:\nnil\n<<< but got:\n%v", err)
+		}
+	}
+}
+
+func TestParse(t *testing.T) {
+	for _, test := range parseTestCases {
+		payload, err := ioutil.ReadFile(test.fixturepath)
+		if err != nil {
+			t.Fatalf("\n>>> Expected err to be nil, but got:\n%v", err)
+		}
+
+		actual, err := p.Parse(payload)
+		if test.err != nil {
+			if err == nil || test.err.Error() != err.Error() {
+				t.Fatalf("\n>>> Expected validation error:\n%v\n<<< but got:\n%v", test.err, err)
+			}
+			continue
+		}
+
+		if test.err == nil && err != nil {
+			t.Fatalf("\n>>> Expected validation error:\nnil\n<<< but got:\n%v", err)
+		}
+
+		if !reflect.DeepEqual(test.expected, actual) {
+			t.Fatalf("\n>>> Expected:\n%v\n<<< but got:\n%v", test.expected, actual)
 		}
 	}
 }
