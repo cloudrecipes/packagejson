@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	p "github.com/cloudrecipes/package-json/internal/pkg/packagejson"
+	p "github.com/cloudrecipes/package-json/pkg/packagejson"
 )
 
 func TestValidate(t *testing.T) {
