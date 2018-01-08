@@ -1,0 +1,10 @@
+language: go
+
+sudo: false
+
+install: scripts/bootstrap.sh
+
+script:
+  - PATH="$HOME/gopath/bin:$PATH"
+  - scripts/lint.sh
+  # - scripts/coverage.sh --coveralls
