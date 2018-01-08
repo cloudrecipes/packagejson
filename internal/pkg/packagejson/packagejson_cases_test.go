@@ -20,7 +20,20 @@ var validationTestCases = []struct {
 	{fixturepath: path.Join(fixturesdir, "package.json"), err: nil},
 }
 
-// TODO: add happy path case.
+var packageJson = &p.PackageJSON{
+	Name:        "seed",
+	Version:     "0.0.1",
+	Description: "NodeJS projects seed",
+	Keywords:    []string{"nodejs", "seed"},
+	Homepage:    "",
+	License:     "MIT",
+	Files:       []string{},
+	Main:        "index.js",
+	Os:          []string{},
+	Cpu:         []string{},
+	Private:     false,
+}
+
 var parseTestCases = []struct {
 	fixturepath string
 	expected    *p.PackageJSON
@@ -31,9 +44,101 @@ var parseTestCases = []struct {
 		expected:    nil,
 		err:         errors.New("unexpected end of JSON input"),
 	},
-	// {
-	// 	fixturepath: path.Join(fixturesdir, "package.json"),
-	// 	expected:    nil,
-	// 	err:         nil,
-	// },
+	{
+		fixturepath: path.Join(fixturesdir, "package.json"),
+		expected:    packageJson,
+		err:         nil,
+	},
+}
+
+var equalsTestCases = []struct {
+	this   *p.PackageJSON
+	other  *p.PackageJSON
+	diff   []string
+	equals bool
+}{
+	{
+		this: packageJson,
+		other: &p.PackageJSON{
+			Name:        "Seed",
+			Version:     "0.0.0",
+			Description: "NodeJS projects seed!!!",
+			Keywords:    []string{"nodejs", ""},
+			Homepage:    "Home",
+			License:     "MIT2",
+			Files:       []string{"main.go"},
+			Main:        "index.js",
+			Os:          []string{"osx"},
+			Cpu:         []string{"darwin"},
+			Private:     true,
+		},
+		diff: []string{
+			"Difference @Name: 'seed' vs 'Seed'",
+			"Difference @Version: '0.0.1' vs '0.0.0'",
+			"Difference @Description: 'NodeJS projects seed' vs 'NodeJS projects seed!!!'",
+			"Difference @Keywords: [nodejs seed] vs [nodejs ]",
+			"Difference @Homepage: '' vs 'Home'",
+			"Difference @License: 'MIT' vs 'MIT2'",
+			"Difference @Files: [] vs [main.go]",
+			"Difference @Os: [] vs [osx]",
+			"Difference @Cpu: [] vs [darwin]",
+			"Difference @Private: 'false' vs 'true'",
+		},
+		equals: false,
+	},
+	{
+		this: packageJson,
+		other: &p.PackageJSON{
+			Name:        "seed",
+			Version:     "0.0.1",
+			Description: "NodeJS projects seed",
+			Keywords:    []string{"nodejs"},
+			Homepage:    "",
+			License:     "MIT",
+			Files:       []string{},
+			Main:        "index.js",
+			Os:          []string{},
+			Cpu:         []string{},
+			Private:     false,
+		},
+		diff: []string{
+			"Difference @Keywords: [nodejs seed] vs [nodejs]",
+		},
+		equals: false,
+	},
+	{
+		this: &p.PackageJSON{
+			Name:        "seed",
+			Version:     "0.0.1",
+			Description: "NodeJS projects seed",
+			Keywords:    []string{},
+			Homepage:    "",
+			License:     "MIT",
+			Files:       []string{"test.go"},
+			Main:        "index.js",
+			Os:          []string{"osx"},
+			Cpu:         []string{"darwin"},
+			Private:     false,
+		},
+		other: &p.PackageJSON{
+			Name:        "seed",
+			Version:     "0.0.1",
+			Description: "NodeJS projects seed",
+			Keywords:    []string{},
+			Homepage:    "",
+			License:     "MIT",
+			Files:       []string{"main.go"},
+			Main:        "main.js",
+			Os:          []string{"win"},
+			Cpu:         []string{"solaris"},
+			Private:     false,
+		},
+		diff: []string{
+			"Difference @Files: [test.go] vs [main.go]",
+			"Difference @Main: 'index.js' vs 'main.js'",
+			"Difference @Os: [osx] vs [win]",
+			"Difference @Cpu: [darwin] vs [solaris]",
+		},
+		equals: false,
+	},
 }

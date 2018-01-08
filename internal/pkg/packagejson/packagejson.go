@@ -43,6 +43,67 @@ func (p *PackageJSON) Validate() error {
 	return nil
 }
 
+// Equals checks if two structures are equal by value.
+func (p *PackageJSON) Equals(other *PackageJSON) (diff []string, equals bool) {
+	if p.Name != other.Name {
+		diff = append(diff, fmt.Sprintf("Difference @Name: '%s' vs '%s'", p.Name, other.Name))
+	}
+
+	if p.Version != other.Version {
+		diff = append(diff, fmt.Sprintf("Difference @Version: '%s' vs '%s'", p.Version, other.Version))
+	}
+
+	if p.Description != other.Description {
+		diff = append(diff, fmt.Sprintf("Difference @Description: '%s' vs '%s'", p.Description, other.Description))
+	}
+
+	if len(p.Keywords) == 0 && len(other.Keywords) == 0 {
+	} else if len(p.Keywords) != len(other.Keywords) {
+		diff = append(diff, fmt.Sprintf("Difference @Keywords: %v vs %v", p.Keywords, other.Keywords))
+	} else if !reflect.DeepEqual(p.Keywords, other.Keywords) {
+		diff = append(diff, fmt.Sprintf("Difference @Keywords: %v vs %v", p.Keywords, other.Keywords))
+	}
+
+	if p.Homepage != other.Homepage {
+		diff = append(diff, fmt.Sprintf("Difference @Homepage: '%s' vs '%s'", p.Homepage, other.Homepage))
+	}
+
+	if p.License != other.License {
+		diff = append(diff, fmt.Sprintf("Difference @License: '%s' vs '%s'", p.License, other.License))
+	}
+
+	if len(p.Files) == 0 && len(other.Files) == 0 {
+	} else if len(p.Files) != len(other.Files) {
+		diff = append(diff, fmt.Sprintf("Difference @Files: %v vs %v", p.Files, other.Files))
+	} else if !reflect.DeepEqual(p.Files, other.Files) {
+		diff = append(diff, fmt.Sprintf("Difference @Files: %v vs %v", p.Files, other.Files))
+	}
+
+	if p.Main != other.Main {
+		diff = append(diff, fmt.Sprintf("Difference @Main: '%s' vs '%s'", p.Main, other.Main))
+	}
+
+	if len(p.Os) == 0 && len(other.Os) == 0 {
+	} else if len(p.Os) != len(other.Os) {
+		diff = append(diff, fmt.Sprintf("Difference @Os: %v vs %v", p.Os, other.Os))
+	} else if !reflect.DeepEqual(p.Os, other.Os) {
+		diff = append(diff, fmt.Sprintf("Difference @Os: %v vs %v", p.Os, other.Os))
+	}
+
+	if len(p.Cpu) == 0 && len(other.Cpu) == 0 {
+	} else if len(p.Cpu) != len(other.Cpu) {
+		diff = append(diff, fmt.Sprintf("Difference @Cpu: %v vs %v", p.Cpu, other.Cpu))
+	} else if !reflect.DeepEqual(p.Cpu, other.Cpu) {
+		diff = append(diff, fmt.Sprintf("Difference @Cpu: %v vs %v", p.Cpu, other.Cpu))
+	}
+
+	if p.Private != other.Private {
+		diff = append(diff, fmt.Sprintf("Difference @Private: '%t' vs '%t'", p.Private, other.Private))
+	}
+
+	return diff, len(diff) == 0
+}
+
 // getField returns struct field value by name.
 func getField(i interface{}, fieldname string) string {
 	value := reflect.ValueOf(i)

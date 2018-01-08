@@ -53,8 +53,22 @@ func TestParse(t *testing.T) {
 			t.Fatalf("\n>>> Expected validation error:\nnil\n<<< but got:\n%v", err)
 		}
 
-		if !reflect.DeepEqual(test.expected, actual) {
+		if _, equals := actual.Equals(test.expected); !equals {
 			t.Fatalf("\n>>> Expected:\n%v\n<<< but got:\n%v", test.expected, actual)
+		}
+	}
+}
+
+func TestEquals(t *testing.T) {
+	for _, test := range equalsTestCases {
+		diff, equals := test.this.Equals(test.other)
+
+		if equals != test.equals {
+			t.Fatalf("\n>>> Expected:\n%t\n<<< but got:\n%t", test.equals, equals)
+		}
+
+		if !reflect.DeepEqual(diff, test.diff) {
+			t.Fatalf("\n>>> Expected:\n%v\n<<< but got:\n%v", test.diff, diff)
 		}
 	}
 }
