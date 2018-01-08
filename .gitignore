@@ -18,3 +18,5 @@ vendor/
 
 # Coverage reports
 .cover/
+
+tmp*
