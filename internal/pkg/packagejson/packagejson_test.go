@@ -72,3 +72,11 @@ func TestEquals(t *testing.T) {
 		}
 	}
 }
+
+func TestTest(t *testing.T) {
+	expected := "cross-env NODE_ENV=test nyc --all ava"
+	actual := packageJson.Test()
+	if actual != expected {
+		t.Fatalf("\n>>> Expected:\n%s\n<<< but got:\n%s", expected, actual)
+	}
+}

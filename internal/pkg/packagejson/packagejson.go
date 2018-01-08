@@ -109,6 +109,11 @@ func (p *PackageJSON) Equals(other *PackageJSON) (diff []string, equals bool) {
 	return diff, len(diff) == 0
 }
 
+// Test returns package.json test command.
+func (p *PackageJSON) Test() string {
+	return p.Scripts["test"]
+}
+
 // getField returns struct field value by name.
 func getField(i interface{}, fieldname string) string {
 	value := reflect.ValueOf(i)
