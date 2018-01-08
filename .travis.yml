@@ -7,4 +7,4 @@ install: scripts/bootstrap.sh
 script:
   - PATH="$HOME/gopath/bin:$PATH"
   - scripts/lint.sh
-  # - scripts/coverage.sh --coveralls
+  - scripts/coverage.sh --coveralls
