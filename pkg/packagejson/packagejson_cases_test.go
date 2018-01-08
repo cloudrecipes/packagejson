@@ -5,11 +5,11 @@ import (
 	"os"
 	"path"
 
-	p "github.com/cloudrecipes/package-json/pkg/packagejson"
+	p "github.com/cloudrecipes/packagejson/pkg/packagejson"
 )
 
 var fixturesdir = path.Join(os.Getenv("GOPATH"), "src", "github.com",
-	"cloudrecipes", "package-json", "test", "fixtures")
+	"cloudrecipes", "packagejson", "test", "fixtures")
 
 var validationTestCases = []struct {
 	fixturepath string
