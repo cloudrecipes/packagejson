@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	p "github.com/cloudrecipes/packagejson/pkg/packagejson"
+	p "github.com/cloudrecipes/packagejson"
 )
 
 const usage = "\nUsage main.go --path=<PATH_TO_PACKAGE.JSON>"
