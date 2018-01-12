@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	p "github.com/cloudrecipes/packagejson/pkg/packagejson"
+	p "github.com/cloudrecipes/packagejson"
 )
 
 var fixturesdir = path.Join(os.Getenv("GOPATH"), "src", "github.com",
